@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'; 
 import { createContext, useContext, useState } from "react";
 
 const AuthContext = createContext();
@@ -22,3 +23,8 @@ export const useAuth = () => {
   const auth = useContext(AuthContext);
   return auth;
 };
+
+AuthContextProvider.propTypes = {
+  isDefaultLogged: PropTypes.bool,
+  children: PropTypes.any
+}
