@@ -26,5 +26,5 @@ export const useAuth = () => {
 
 AuthContextProvider.propTypes = {
   isDefaultLogged: PropTypes.bool,
-  children: PropTypes.any
+  children: PropTypes.element
 }
