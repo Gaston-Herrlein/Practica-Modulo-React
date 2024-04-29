@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Button } from '../../components/Button.jsx';
-import { login } from './service.js';
+import { register } from './service.js';
 import { useAuth } from './context.jsx';
 
 export default function LoginPage() {
@@ -21,10 +20,8 @@ export default function LoginPage() {
 
   const handleSubmit = async event => {
     event.preventDefault();
-
-    // const response = await login(formValues);
-    await login(formValues);
-
+    console.log(formValues)
+    await register(formValues);
     onLogin();
   };
 
@@ -37,12 +34,14 @@ export default function LoginPage() {
         <input
           type="text"
           name="username"
+          placeholder="email"
           value={username}
           onChange={handleChange}
         />
         <input
           type="password"
           name="password"
+          placeholder="password"
           value={password}
           onChange={handleChange}
         />
@@ -51,8 +50,7 @@ export default function LoginPage() {
           <input type="checkbox" name="remember password" value={remember}
             onChange={handleChange}/>
         </label>
-          {/**TENGO PROBLEMAS IMPORTANDO EL COMPONENTE BUTTON */}
-        <Button type={"submit"} disabled={buttonDisabled} message={"Login"} />
+        <button type='submit' disabled={buttonDisabled}>Login</button>
       </form>
     </div>
   );
