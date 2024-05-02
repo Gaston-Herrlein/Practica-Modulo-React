@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { login } from './service.js';
+import { register } from './service.js';
 import { useAuth } from './context.jsx';
 
 export default function LoginPage() {
@@ -25,7 +25,7 @@ export default function LoginPage() {
 
   const handleSubmit = async event => {
     event.preventDefault();
-    await login({username, password, remember: isChecked});
+    await register({username, password, remember: isChecked});
     onLogin();
   };
 
@@ -33,7 +33,7 @@ export default function LoginPage() {
   const buttonDisabled = !username || !password;
   return (
     <div>
-      <h1>Log in to NodePop</h1>
+      <h1>Sign up for NodePop</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -54,7 +54,7 @@ export default function LoginPage() {
           <input type="checkbox" name="isChequed" checked={isChecked}
             onChange={handleIsChequed}/>
         </label>
-        <button type='submit' disabled={buttonDisabled}>Login</button>
+        <button type='submit' disabled={buttonDisabled}>Sign up</button>
       </form>
     </div>
   );
