@@ -2,13 +2,19 @@ import { useState, useEffect } from "react";
 import storage from "../../utils/storage";
 import PropTypes from 'prop-types';
 
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import Button from "react-bootstrap/Button";
+import Stack from "react-bootstrap/Stack";
+
 export const Header = () => {
     const {accesToken, setAccesToken} = useState(null);
 
     const handleAccesToken = (token) => {
         setAccesToken(token);
     }
-    
+
     useEffect (() => {
         const token = storage.get("accessToken")
         if (token) {
@@ -17,18 +23,16 @@ export const Header = () => {
     }, [])
     
     return (
-        <header>
-            <nav className="navbar bg-body-tertiary">
-                <div className="container-fluid">
-                    <a className="navbar-brand">NodePop</a>
-                    <form className="d-flex" role="search">
-                        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                        <button className="btn btn-outline-success" type="submit">Search</button>
-                    </form>
-                    <AuthButtons accesToken={accesToken}/>
-                </div>
-            </nav>    
-        </header>
+        <>
+            <Navbar bg="primary" data-bs-theme="dark">
+                <Container className="justify-content-between">
+                        <Navbar.Brand className="" href="#home">NodePop</Navbar.Brand>
+                        <Nav className="">
+                            <AuthButtons accesToken={accesToken}/>
+                        </Nav>
+                </Container>
+            </Navbar>
+        </>
     )
 }
 
@@ -36,10 +40,13 @@ const AuthButtons = ({accesToken}) => {
     return (
         <>
         {accesToken !== null ? (<>
-            <button className="btn btn-outline-success" type="submit">Login</button>
-            <button className="btn btn-outline-success" type="submit">Sign Up</button> 
+            <Stack direction="horizontal" gap={3}>
+                <Button variant="primary">Login</Button>
+                <Button variant="primary">Sign In</Button>
+            </Stack>
             </>) : 
-            <button type="button" className="btn-close" aria-label="Close"></button>}
+            <Button variant="primary">Close</Button>
+        }
         </>
     )
 }

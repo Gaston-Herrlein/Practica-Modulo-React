@@ -6,6 +6,8 @@ import { AuthContextProvider } from './pages/auth/context.jsx'
 import storage from './utils/storage.js'
 import { setAuthorizationHeader } from './api/client.js'
 
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 const accessToken = storage.get('auth');
 if (accessToken) {
   setAuthorizationHeader(accessToken);
