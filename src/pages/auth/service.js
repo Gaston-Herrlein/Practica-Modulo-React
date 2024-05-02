@@ -3,6 +3,7 @@ import {
   setAuthorizationHeader,
   removeAuthorizationHeader,
 } from "../../api/client.js";
+import storage from "../../utils/storage.js";
 
 export const register = async ({ username, password, remember }) => {
   return client
@@ -24,11 +25,11 @@ export const login = async ({ username, password, remember }) => {
 };
 
 const setJWT = (accessToken) => {
-  localStorage.setItem("accessToken", accessToken);
+  storage.set("accessToken", accessToken);
   setAuthorizationHeader(accessToken);
 };
 
 const removeJWT = (accessToken) => {
-  localStorage.removeItem("accessToken");
+  storage.remove("accessToken");
   removeAuthorizationHeader();
 };
