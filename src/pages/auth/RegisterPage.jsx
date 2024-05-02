@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { register } from './service.js';
 import { useAuth } from './context.jsx';
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const { onLogin } = useAuth();
 
   const [formValues, setFormValues] = useState({
-    username: '',
+    email: '',
     password: '',
+    username: '',
+    name: ''
   });
 
   const [isChecked, setIsChecked] = useState (false)
@@ -25,28 +27,42 @@ export default function LoginPage() {
 
   const handleSubmit = async event => {
     event.preventDefault();
-    await register({username, password, remember: isChecked});
+    await register({email, password, username, name, remember: isChecked});
     onLogin();
   };
 
-  const { username, password } = formValues;
-  const buttonDisabled = !username || !password;
+  const { email, password, username, name } = formValues;
+  const buttonDisabled = !email || !password || !username || !name;
   return (
     <div>
       <h1>Sign up for NodePop</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          name="username"
-          placeholder="email"
-          value={username}
+          name="email"
+          placeholder="Email"
+          value={email}
           onChange={handleChange}
         />
         <input
           type="password"
           name="password"
-          placeholder="password"
+          placeholder="Password"
           value={password}
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="username"
+          placeholder="User Name"
+          value={username}
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="name"
+          placeholder="Full Name"
+          value={name}
           onChange={handleChange}
         />
         <label>

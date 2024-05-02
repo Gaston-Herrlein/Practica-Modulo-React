@@ -6,7 +6,7 @@ export default function LoginPage() {
   const { onLogin } = useAuth();
 
   const [formValues, setFormValues] = useState({
-    username: '',
+    email: '',
     password: '',
   });
 
@@ -25,21 +25,21 @@ export default function LoginPage() {
 
   const handleSubmit = async event => {
     event.preventDefault();
-    await login({username, password, remember: isChecked});
+    await login({email, password, remember: isChecked});
     onLogin();
   };
 
-  const { username, password } = formValues;
-  const buttonDisabled = !username || !password;
+  const { email, password } = formValues;
+  const buttonDisabled = !email || !password;
   return (
     <div>
-      <h1>Log in to NodePop</h1>
+      <h1>Login to NodePop</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          name="username"
+          name="email"
           placeholder="email"
-          value={username}
+          value={email}
           onChange={handleChange}
         />
         <input

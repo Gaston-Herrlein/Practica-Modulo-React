@@ -5,20 +5,25 @@ import {
 } from "../../api/client.js";
 import storage from "../../utils/storage.js";
 
-export const register = async ({ username, password, remember }) => {
+export const register = async ({
+  email,
+  password,
+  username,
+  name,
+  remember,
+}) => {
   return client
-    .post("/auth/register", { username, password })
+    .post("/api/auth/signup", { email, password, username, name })
     .then(() => {
-      login({ username, password, remember });
+      login({ email, password, remember });
     })
     .catch((error) => console.log(error));
 };
 
-export const login = async ({ username, password, remember }) => {
+export const login = async ({ email, password, remember }) => {
   return client
-    .post("/auth/login", { username, password })
+    .post("/api/auth/login", { email, password })
     .then(({ accessToken }) => {
-      console.log("token: ", accessToken);
       remember ? setJWT(accessToken) : null;
     })
     .catch((error) => console.log(error));
