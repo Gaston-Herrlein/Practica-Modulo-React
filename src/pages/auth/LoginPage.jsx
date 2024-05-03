@@ -1,19 +1,22 @@
-import { useState } from 'react';
-import { login } from './service.js';
-import { useAuth } from './context.jsx';
+import { useState } from "react";
+import { login } from "./service.js";
+import { useAuth } from "./context.jsx";
+import { Button, Container, Form } from "react-bootstrap";
+
+import PropTypes from 'prop-types';
 
 export default function LoginPage() {
   const { onLogin } = useAuth();
 
   const [formValues, setFormValues] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
-  const [isChecked, setIsChecked] = useState (false)
+  const [isChecked, setIsChecked] = useState(false);
 
-  const handleChange = event => {
-    setFormValues(currentFormValues => ({
+  const handleChange = (event) => {
+    setFormValues((currentFormValues) => ({
       ...currentFormValues,
       [event.target.name]: event.target.value,
     }));
@@ -21,41 +24,93 @@ export default function LoginPage() {
 
   const handleIsChequed = () => {
     setIsChecked(!isChecked);
-  }
+  };
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    await login({email, password, remember: isChecked});
+    await login({ email, password, remember: isChecked });
     onLogin();
   };
 
   const { email, password } = formValues;
   const buttonDisabled = !email || !password;
   return (
-    <div>
+    <Container className="">
       <h1>Login to NodePop</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="email"
-          placeholder="email"
-          value={email}
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="password"
-          value={password}
-          onChange={handleChange}
-        />
+      <FormCustom
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+        handleIsChequed={handleIsChequed}
+        buttonDisabled={buttonDisabled}
+        email={email}
+        password={password}
+      />
+      {/*
         <label>
           <span>Remember</span>
           <input type="checkbox" name="isChequed" checked={isChecked}
             onChange={handleIsChequed}/>
         </label>
         <button type='submit' disabled={buttonDisabled}>Login</button>
-      </form>
-    </div>
+      </form> */}
+    </Container>
   );
+}
+
+const FormCustom = ({
+  handleSubmit,
+  handleChange,
+  handleIsChequed,
+  buttonDisabled,
+  email,
+  password,
+}) => {
+  return (
+    <Form onSubmit={handleSubmit}>
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Label>Email address</Form.Label>
+        <Form.Control
+          type="email"
+          name="email"
+          placeholder="Enter email"
+          value={email}
+          onChange={handleChange}
+        />
+        <Form.Text className="text-muted">
+          We all never share your email with anyone else.
+        </Form.Text>
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Label>Password</Form.Label>
+        <Form.Control
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={password}
+          onChange={handleChange}
+        />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicCheckbox">
+        <Form.Check
+          type="checkbox"
+          name="isChequed"
+          label="Remember me"
+          onChange={handleIsChequed}
+        />
+      </Form.Group>
+      <Button variant="primary" type="submit" disabled={buttonDisabled}>
+        Submit
+      </Button>
+    </Form>
+  );
+};
+
+FormCustom.propTypes = {
+  handleSubmit: PropTypes.func,
+  handleChange: PropTypes.func,
+  handleIsChequed: PropTypes.func,
+  buttonDisabled: PropTypes.bool,
+  email: PropTypes.string,
+  password: PropTypes.string
 }
