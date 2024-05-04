@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { login } from "./service.js";
 import { useAuth } from "./context.jsx";
-import { Button, Container, Form } from "react-bootstrap";
-
-import PropTypes from 'prop-types';
+import { FormLogin } from "../components/FormLogin.jsx"
+import Container from "react-bootstrap/Container";
 
 export default function LoginPage() {
   const { onLogin } = useAuth();
@@ -37,7 +36,7 @@ export default function LoginPage() {
   return (
     <Container className="">
       <h1>Login to NodePop</h1>
-      <FormCustom
+      <FormLogin
         handleSubmit={handleSubmit}
         handleChange={handleChange}
         handleIsChequed={handleIsChequed}
@@ -45,72 +44,7 @@ export default function LoginPage() {
         email={email}
         password={password}
       />
-      {/*
-        <label>
-          <span>Remember</span>
-          <input type="checkbox" name="isChequed" checked={isChecked}
-            onChange={handleIsChequed}/>
-        </label>
-        <button type='submit' disabled={buttonDisabled}>Login</button>
-      </form> */}
     </Container>
   );
 }
 
-const FormCustom = ({
-  handleSubmit,
-  handleChange,
-  handleIsChequed,
-  buttonDisabled,
-  email,
-  password,
-}) => {
-  return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control
-          type="email"
-          name="email"
-          placeholder="Enter email"
-          value={email}
-          onChange={handleChange}
-        />
-        <Form.Text className="text-muted">
-          We all never share your email with anyone else.
-        </Form.Text>
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={password}
-          onChange={handleChange}
-        />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicCheckbox">
-        <Form.Check
-          type="checkbox"
-          name="isChequed"
-          label="Remember me"
-          onChange={handleIsChequed}
-        />
-      </Form.Group>
-      <Button variant="primary" type="submit" disabled={buttonDisabled}>
-        Submit
-      </Button>
-    </Form>
-  );
-};
-
-FormCustom.propTypes = {
-  handleSubmit: PropTypes.func,
-  handleChange: PropTypes.func,
-  handleIsChequed: PropTypes.func,
-  buttonDisabled: PropTypes.bool,
-  email: PropTypes.string,
-  password: PropTypes.string
-}
