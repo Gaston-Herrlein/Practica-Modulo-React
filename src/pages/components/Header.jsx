@@ -9,7 +9,7 @@ import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 
 export const Header = () => {
-    const {accesToken, setAccesToken} = useState(null);
+    const [accesToken, setAccesToken] = useState(null);
 
     const handleAccesToken = (token) => {
         setAccesToken(token);
@@ -18,10 +18,10 @@ export const Header = () => {
     useEffect (() => {
         const token = storage.get("accessToken")
         if (token) {
-            handleAccesToken(token) 
-        }    
+            handleAccesToken(token)
+        }
     }, [])
-    
+
     return (
         <>
             <Navbar bg="primary" data-bs-theme="dark">
@@ -39,10 +39,10 @@ export const Header = () => {
 const AuthButtons = ({accesToken}) => {
     return (
         <>
-        {accesToken !== null ? (<>
+        {accesToken === null ? (<>
             <Stack direction="horizontal" gap={3}>
                 <Button variant="primary">Login</Button>
-                <Button variant="primary">Sign In</Button>
+                <Button variant="primary">Sign up</Button>
             </Stack>
             </>) : 
             <Button variant="primary">Close</Button>
@@ -52,5 +52,5 @@ const AuthButtons = ({accesToken}) => {
 }
 
 AuthButtons.propTypes = {
-    accesToken: PropTypes.string | null
+    accesToken: PropTypes.string
   }
