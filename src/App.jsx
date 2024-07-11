@@ -1,22 +1,32 @@
+import { Container } from "react-bootstrap"
+import { Routes, Route, Navigate } from 'react-router-dom';
+
 import LoginPage from "./pages/auth/LoginPage"
 import RegisterPage from "./pages/auth/RegisterPage.jsx"
+import { NewAdPage } from "./pages/ads/NewAdPage.jsx"
+import { AdPage } from "./pages/ads/AdPage.jsx"
 import { Header } from "./pages/components/Header.jsx"
 import { useAuth } from "./pages/auth/context.jsx"
 import { AdsMainPage } from "./pages/ads/AdsMainPage.jsx"
-import { Container } from "react-bootstrap"
+import Layout from "./pages/components/Layout.jsx";
 
 function App() {
   const {isLogged} = useAuth()
   return (
-    <>
-    <Header />
-    <Container className="center">
-      <AdsMainPage />
-    </Container>
-    {/* <LoginPage /> */}
-    {/* <RegisterPage /> */}
-    {isLogged ? <RegisterPage /> : <h1>SHOW ADS</h1>}
-    </>
+    <Routes>
+      <Route
+        path="/adverts"
+        element={
+          <>
+            {isLogged ? <Layout /> : <LoginPage />}
+          </>
+        }
+      >
+        <Route index element={<AdsMainPage />} />
+        <Route path="new" element={<NewAdPage />} />
+        <Route path=":Id" element={<AdPage />} />
+      </Route>
+    </Routes>
   )
 }
 
