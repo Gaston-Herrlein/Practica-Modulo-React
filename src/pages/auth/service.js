@@ -26,7 +26,9 @@ export const login = async ({ email, password, remember }) => {
     .then(({ accessToken }) => {
       remember ? setJWT(accessToken) : null;
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      throw error;
+    });
 };
 
 const setJWT = (accessToken) => {

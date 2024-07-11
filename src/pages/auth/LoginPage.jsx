@@ -27,8 +27,12 @@ export default function LoginPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await login({ email, password, remember: isChecked });
-    onLogin();
+    try {
+      const res = await login({ email, password, remember: isChecked });
+      onLogin();
+    } catch (err) {
+      console.log(err)
+    }
   };
 
   const { email, password } = formValues;
