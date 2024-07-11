@@ -1,3 +1,5 @@
+import { Container } from "react-bootstrap";
+
 import { AdCard } from "./components/AdCard";
 
 export const AdsMainPage = () => {
@@ -10,8 +12,8 @@ export const AdsMainPage = () => {
   }
   
   return (
-    <>
+    <Container className="center">
       <AdCard imgSRC={dummyAd.imgSRC} title={dummyAd.title} description={dummyAd.decription} price={dummyAd.price} sale={dummyAd.sale} />
-    </>
+    </Container>
   );
 };
