@@ -7,18 +7,15 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
+import { useAuth } from "../auth/context";
 
 export const Header = () => {
-    const [accesToken, setAccesToken] = useState(null);
-
-    const handleAccesToken = (token) => {
-        setAccesToken(token);
-    }
+    const {isLogged, onLogin} = useAuth()
 
     useEffect (() => {
         const token = storage.get("accessToken")
         if (token) {
-            handleAccesToken(token)
+            onLogin()
         }
     }, [])
 
@@ -28,7 +25,7 @@ export const Header = () => {
                 <Container className="justify-content-between">
                         <Navbar.Brand className="" href="#home">NodePop</Navbar.Brand>
                         <Nav className="">
-                            <AuthButtons accesToken={accesToken}/>
+                            <AuthButtons isLogged={isLogged}/>
                         </Nav>
                 </Container>
             </Navbar>
@@ -36,10 +33,10 @@ export const Header = () => {
     )
 }
 
-const AuthButtons = ({accesToken}) => {
+const AuthButtons = ({isLogged}) => {
     return (
         <>
-        {accesToken === null ? (<>
+        {isLogged === null ? (<>
             <Stack direction="horizontal" gap={3}>
                 <Button variant="primary">Login</Button>
                 <Button variant="primary">Sign up</Button>
@@ -52,5 +49,5 @@ const AuthButtons = ({accesToken}) => {
 }
 
 AuthButtons.propTypes = {
-    accesToken: PropTypes.string
+    isLogged: PropTypes.bool
   }
