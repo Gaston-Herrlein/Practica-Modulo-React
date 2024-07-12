@@ -8,6 +8,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import { useAuth } from "../auth/context";
+import { logout } from "../auth/service";
 
 export const Header = () => {
     const {isLogged, onLogin} = useAuth()
@@ -34,6 +35,13 @@ export const Header = () => {
 }
 
 const AuthButtons = ({isLogged}) => {
+    const {onLogout} = useAuth()
+    
+    const handleLogout = () => {
+        logout();
+        onLogout();
+    };
+    
     return (
         <>
         {isLogged === null ? (<>
@@ -42,7 +50,7 @@ const AuthButtons = ({isLogged}) => {
                 <Button variant="primary">Sign up</Button>
             </Stack>
             </>) : 
-            <Button variant="primary">Close</Button>
+            <Button variant="primary" onClick={handleLogout}>Close</Button>
         }
         </>
     )

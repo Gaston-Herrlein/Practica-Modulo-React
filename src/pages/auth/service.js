@@ -31,12 +31,12 @@ export const login = async ({ email, password, remember }) => {
     });
 };
 
+export const logout = (accessToken) => {
+  storage.remove("accessToken");
+  removeAuthorizationHeader();
+};
+
 const setJWT = (accessToken) => {
   storage.set("accessToken", accessToken);
   setAuthorizationHeader(accessToken);
-};
-
-const removeJWT = (accessToken) => {
-  storage.remove("accessToken");
-  removeAuthorizationHeader();
 };
