@@ -1,8 +1,25 @@
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
 import { AdCard } from "./components/AdCard";
+import { getAdverts } from "./service";
+
+const defaultFilters = {
+  name: "",
+  price: [],
+  sale: "",
+  tags: [],
+}
+
+// const getFilters = () => storage.get('filters') || defaultFilters;
+const getFilters = () => defaultFilters;
 
 export const AdsMainPage = () => {
+  const navigate = useNavigate
+  const [adverts, setAdverts] = useState([]);
+  const [filters, setFilters] = useState(getFilters);
+  
   const dummyAd = {
     imgSRC: "../src/assets/not-found.jpg",
     title: "Nombre del articulo",
@@ -10,6 +27,17 @@ export const AdsMainPage = () => {
     price: "$100",
     sale: true
   }
+
+  useEffect(() => {
+    getAdverts()
+      .then(adverts => {
+        console.log(adverts)
+        setAdverts(adverts);
+      })
+      .catch(error => {
+        console.log(error)
+      }); 
+  }, [navigate])
   
   return (
     <Container className="center">
